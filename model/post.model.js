@@ -8,12 +8,13 @@ const Post = new mongoose.Schema({
   
   userId:{
     type:mongoose.SchemaTypes.ObjectId,
-    ref:"users"
+    required: true,
+    ref:"User"
   },
   commentIds:{
     type:[mongoose.SchemaTypes.ObjectId],
-    ref:"comments"
+    ref:"Comment"
   }
 });
 
-module.exports = mongoose.model("posts", Post);
+module.exports = mongoose.model("Post", Post);

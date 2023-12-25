@@ -42,7 +42,7 @@ exports.validateLogin = async (req, res, next) => {
 const doesEmailIdExist = async (req, res) => {
   try {
     let doesUserExist = await User.findOne({
-      email: req.body.userEmail || req.body.email,
+      email: req.body?.userEmail || req.body.email,
     });
     
     if (!doesUserExist) {

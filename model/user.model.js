@@ -15,6 +15,7 @@ const User = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   postIds:{
     type:[mongoose.SchemaTypes.ObjectId],
@@ -26,4 +27,4 @@ const User = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("users", User);
+module.exports = mongoose.model("User", User);

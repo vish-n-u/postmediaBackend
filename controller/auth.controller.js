@@ -8,40 +8,39 @@ const User = require("../model/user.model");
 exports.registration = async (req, res) => {
   console.log("registration", req.user, secretKey);
   try {
-    if (req.user) {
-      const newUser = {
-        userName: req.user.userName,
-        email: req.user.email,
-      };
-      let token = jwt.sign({ email: newUser.email }, secretKey, {
-        expiresIn: "10m",
-      });
+    // if (req.user) {
+    //   const newUser = {
+    //     userName: req.user.userName,
+    //     email: req.user.email,
+    //   };
+    //   let token = jwt.sign({ email: newUser.email }, secretKey, {
+    //     expiresIn: "10m",
+    //   });
       
-      return res.status(201).send({
-        message: {
-          userName: newUser.userName,
-          token,
+    //   return res.status(201).send({
+    //     message: {
+    //       userName: newUser.userName,
+    //       token,
           
-        },
-      });
-    }
+    //     },
+    //   });
+    // }
     // const isUserDeleted = await User.findOne({ email: req.body.email });
     const obj = {
-      userName: req.body.userName,
+      userName: req.body.username,
       userPic:req.body.pic,
       password: bcrypt.hashSync(req.body.password, 10),
       email: req.body.email,
     };
     const newUser = await User.create(obj);
 
-    let token = jwt.sign({ email: newUser.email }, secretKey, {
-      expiresIn: "10 minutes",
-    });
+    let token = jwt.sign({ email: newUser.email }, secretKey);
     
     return res.status(201).send({
       message: {
         userName: newUser.userName,
         token,
+        pic:newUser.userPic,
       },
     });
   } catch (err) {
@@ -69,7 +68,7 @@ exports.login = async (req, res) => {
     return res.status(200).send({
       message: {
         userName: req.doesUserExist.userName,
-        usrPic:req.doesUserExist.usrPic,
+        pic:req.doesUserExist.userPic,
         token,
         
       },
